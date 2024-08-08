@@ -8,11 +8,14 @@ public class Morse {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+        String caracter = "";
+        int largo = 0;
+        int fila = 0;
 
         String[][] morseCode = {
             {"A", ".-"}, {"B", "-..."}, {"C", "-.-."}, {"D", "-.."}, {"E", "."},
             {"F", "..-."}, {"G", "--."}, {"H", "...."}, {"I", ".."}, {"J", ".---"},
-            {"K", "-.-"}, {"L", ".-.."}, {"M", "--"}, {"N", "-."}, {"O", "---"},
+            {"K", "-.-"}, {"L", ".-.."}, {"M", "--"}, {"N", "-."}, {"Ñ", "--.--"}, {"O", "---"},
             {"P", ".--."}, {"Q", "--.-"}, {"R", ".-."}, {"S", "..."}, {"T", "-"},
             {"U", "..-"}, {"V", "...-"}, {"W", ".--"}, {"X", "-..-"}, {"Y", "-.--"},
             {"Z", "--.."}, {"0", "-----"}, {"1", ".----"}, {"2", "..---"}, {"3", "...--"},
@@ -32,19 +35,30 @@ public class Morse {
         System.out.print("Escriba la palabra a convertir: ");
         String frase = scan.nextLine();
 
-        System.out.println("=================================================== <[Codificacion]> ===============================================");
+        System.out.println("=================================================== <[Codificacion]> ==============================================");
 
         for (int i = 0; i < frase.length(); i++) {
             char character = frase.charAt(i);
             String charString = Character.toString(character).toUpperCase();
 
-            if (morseMap.containsKey(charString)) {
-                System.out.print(morseMap.get(charString));
-            } else if (charString.equals(" ")) {
-                System.out.print("/");
+            if (largo >= 106) {
+                caracter = caracter + "\n";
+                largo = 0;
+                fila = caracter.length();
+            } else if (largo > 0) {
+                caracter = caracter + " ";
             }
+
+            if (morseMap.containsKey(charString)) {
+                caracter = caracter + morseMap.get(charString);
+            } else if (charString.equals(" ")) {
+                caracter = caracter + "/";
+            } else {
+                caracter = caracter + "???";
+            }
+            largo = caracter.length() - fila;
         }
-        System.out.println("");
+        System.out.println(caracter);
         System.out.println("==================================================================================================================");
     }
 }
